@@ -1,8 +1,6 @@
 library(glmnet)
 cma=function(X,Y,times=300,sel=NA,rho=0.5,alpha_glmnet=1,nfolds)        
 
-
-
   {
 L=list()
 n=nrow(X);p=ncol(X) 
@@ -11,7 +9,7 @@ if(rho>1 | rho<0) {stop("rho should be between 0 and 1!")}
 if(!is.na(sel)){if(sel>=1 | sel<=0) {stop("sel should be between 0 and 1!")}}   
 if(is.na(sel)) {sel=0.5}
 
-Y=Y-mean(Y); cv0=cv.glmnet(x=X,y=Y,alpha=alpha_glmnet,nfolds=nfolds,maxit=1000000)
+Y=Y-mean(Y); cv0=cv.glmnet(x=X,y=Y,alpha=alpha_glmnet,nfolds=nfolds,maxit=1000)
 lasso0=cv0$glmnet.fit
 Beta=predict(lasso0,type="coef",s=cv0$lambda.min)
 beta.estimate=Beta[-1]
@@ -37,7 +35,6 @@ new.group=idx; no_cor_group=no_cor_group+1; flag=0
        rest.idx=setdiff(group0,new.group)
        if(length(rest.idx)==0) {break}
        if(length(rest.idx)==1) {m.cor=mean(COR[rest.idx,new.group])}
-       #if(length(rest.idx)>1) {SUB.COR=as.matrix(COR[rest.idx,new.group]); m.cor=apply(SUB.COR,1,mean)}
        if(length(rest.idx)>1) {SUB.COR=as.matrix(COR[rest.idx,new.group]); m.cor=apply(SUB.COR,1,mean)}
 
        if(max(m.cor)<rho){flag=1}
