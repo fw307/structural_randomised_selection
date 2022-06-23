@@ -1,5 +1,5 @@
 library(glmnet)
-cma=function(X,Y,times=300,sel=NA,rho=0.5,alpha_glmnet=1,nfolds)        
+srs=function(X,Y,times=300,sel=NA,rho=0.5,alpha_glmnet=1,nfolds)        
 
   {
 L=list()
